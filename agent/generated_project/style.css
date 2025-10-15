@@ -1,0 +1,221 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#app-container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    color: #4a00e0;
+    margin-bottom: 25px;
+    font-size: 2.5em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+#new-todo-input {
+    width: calc(100% - 110px);
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-right: 10px;
+    transition: border-color 0.3s ease;
+}
+
+#new-todo-input:focus {
+    border-color: #6a11cb;
+    outline: none;
+}
+
+#add-todo-btn {
+    padding: 12px 20px;
+    background-color: #2575fc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#add-todo-btn:hover {
+    background-color: #1a5bbd;
+    transform: translateY(-2px);
+}
+
+#todo-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 25px;
+}
+
+#todo-list li {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    word-break: break-word;
+}
+
+#todo-list li:hover {
+    background-color: #eef;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#todo-list li span {
+    flex-grow: 1;
+    text-align: left;
+    margin-right: 10px;
+    color: #555;
+    font-size: 1.1em;
+}
+
+#todo-list li.completed span {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+#todo-list li button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-left: 8px;
+    padding: 5px;
+    border-radius: 5px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#todo-list li .complete-btn {
+    color: #28a745; /* Green for complete */
+}
+
+#todo-list li .complete-btn:hover {
+    background-color: #e6ffe6;
+    color: #1e7e34;
+}
+
+#todo-list li .delete-btn {
+    color: #dc3545; /* Red for delete */
+}
+
+#todo-list li .delete-btn:hover {
+    background-color: #ffe6e6;
+    color: #c82333;
+}
+
+/* Calculator Styles */
+.calculator { /* Changed from #calculator-container to .calculator */
+    width: 320px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #e0f2f7; /* Light blue background for calculator */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 15px;
+}
+
+#display {
+    background-color: #ffffff; /* White background for display */
+    color: #007bff; /* Blue text for display */
+    font-size: 2.8em;
+    text-align: right;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+    box-shadow: inset 0 0 10px rgba(0, 123, 255, 0.2);
+    border: 1px solid #007bff; /* Added explicit border */
+}
+
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calculator .operator-button,
+.calculator .number-button,
+.calculator #clear-button,
+.calculator #equals-button {
+    width: 100%;
+    height: 60px;
+    font-size: 1.8em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: #007bff; /* Blue text for buttons */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.number-button {
+    background-color: #f0f8ff; /* AliceBlue for numbers */
+}
+
+.operator-button {
+    background-color: #add8e6; /* LightBlue for operators */
+}
+
+#clear-button {
+    background-color: #add8e6; /* LightBlue for clear, consistent with operators */
+    color: #007bff; /* Blue text for clear */
+    grid-column: span 1; /* Reset to span 1, if it was span 2, it would break the grid */
+}
+
+#equals-button {
+    background-color: #007bff; /* Primary blue for equals */
+    color: white; /* White text for equals */
+    grid-column: span 2;
+}
+
+/* Hover effects */
+.calculator .operator-button:hover,
+.calculator .number-button:hover,
+.calculator #clear-button:hover,
+.calculator #equals-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.number-button:hover {
+    background-color: #e0f2f7; /* Lighter blue on hover */
+}
+
+.operator-button:hover {
+    background-color: #87ceeb; /* SkyBlue on hover */
+}
+
+#clear-button:hover {
+    background-color: #87ceeb; /* SkyBlue on hover, consistent with operator hover */
+}
+
+#equals-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+/* Specific style for the zero button to span two columns */
+#zero-button {
+    grid-column: span 2;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colourful Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" value="0" readonly>
+        <div class="buttons-grid">
+            <button class="operator-button" id="clear-button">C</button>
+            <button class="operator-button" data-operator="/">/</button>
+            <button class="operator-button" data-operator="*">*</button>
+            <button class="operator-button" data-operator="-">-</button>
+
+            <button class="number-button" data-number="7">7</button>
+            <button class="number-button" data-number="8">8</button>
+            <button class="number-button" data-number="9">9</button>
+            <button class="operator-button" data-operator="+">+</button>
+
+            <button class="number-button" data-number="4">4</button>
+            <button class="number-button" data-number="5">5</button>
+            <button class="number-button" data-number="6">6</button>
+            <button class="number-button" id="decimal" data-number=".">.</button>
+
+            <button class="number-button" data-number="1">1</button>
+            <button class="number-button" data-number="2">2</button>
+            <button class="number-button" data-number="3">3</button>
+            <button id="equals-button" data-operator="=">=</button>
+            <button class="number-button" id="zero-button" data-number="0">0</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
