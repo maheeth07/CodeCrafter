@@ -10,10 +10,12 @@ from states import *
 from tools import *
 _ = load_dotenv()
 
+init_project_root()
+
 set_debug(True)
 set_verbose(True)
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite")
 
 
 def planner_agent(state: dict) -> dict:
@@ -50,10 +52,15 @@ def coder_agent(state: dict) -> dict:
     if coder_state.current_step_idx >= len(steps):
         return {"coder_state": coder_state, "status": "DONE"}
 
+    # Sleep 15 seconds to respect the 5 RPM Gemini API free tier rate limit
+    import time
+    print(f"--- Sleeping 15 seconds to respect Gemini 5 RPM API rate limits (Step {coder_state.current_step_idx + 1}/{len(steps)}) ---")
+    time.sleep(15)
+
     current_task = steps[coder_state.current_step_idx]
     
     # Collect all existing files for context
-    existing_files = {f.path: read_file.run(f.path) for f in state["task_plan"].implementation_steps}
+    existing_files = {f.filepath: read_file.run(f.filepath) for f in coder_state.task_plan.implementation_steps}
     
     system_prompt = coder_system_prompt(existing_files)
     user_prompt = (
@@ -93,6 +100,6 @@ graph.add_conditional_edges(
 graph.set_entry_point("planner")
 agent = graph.compile()
 if __name__ == "__main__":
-    result = agent.invoke({"user_prompt": "Build a Calculator with blue and white UI and make it working for addition , subtraction , multiplication and division"},
+    result = agent.invoke({"user_prompt": "Generate the HTML, CSS, and JavaScript code for a modern, mobile-responsive Tic Tac Toe game. It should be a 3x3 grid, have a 'Play Again' button, and display which player's turn it is or who won. Put the CSS and JS in separate files, or provide them within the same file for ease of use."},
                           {"recursion_limit": 100})
     print("Final State:", result)

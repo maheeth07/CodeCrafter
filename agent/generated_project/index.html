@@ -3,35 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colourful Calculator</title>
+    <title>Tic Tac Toe Premium</title>
+    <!-- Google Fonts for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Link to the stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <!-- Link to the game script -->
+    <script src="script.js" defer></script>
 </head>
-<body>
-    <div class="calculator">
-        <input type="text" id="display" value="0" readonly>
-        <div class="buttons-grid">
-            <button class="operator-button" id="clear-button">C</button>
-            <button class="operator-button" data-operator="/">/</button>
-            <button class="operator-button" data-operator="*">*</button>
-            <button class="operator-button" data-operator="-">-</button>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="game-header">
+            <h1 class="game-title">Tic Tac Toe <span class="accent">Premium</span></h1>
+            <!-- Theme Toggle Button with inline SVGs -->
+            <button id="themeToggle" class="btn-icon" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+                <!-- Sun Icon for Dark Mode (to switch to light) -->
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <!-- Moon Icon for Light Mode (to switch to dark) -->
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </header>
 
-            <button class="number-button" data-number="7">7</button>
-            <button class="number-button" data-number="8">8</button>
-            <button class="number-button" data-number="9">9</button>
-            <button class="operator-button" data-operator="+">+</button>
+        <!-- Game Settings Section -->
+        <section class="settings-section" aria-label="Game Settings">
+            <div class="setting-control">
+                <label for="modeSelect" class="setting-label">Game Mode</label>
+                <div class="select-wrapper">
+                    <select id="modeSelect" aria-label="Select Game Mode">
+                        <option value="pvp">Player vs Player</option>
+                        <option value="ai">Player vs AI</option>
+                    </select>
+                </div>
+            </div>
 
-            <button class="number-button" data-number="4">4</button>
-            <button class="number-button" data-number="5">5</button>
-            <button class="number-button" data-number="6">6</button>
-            <button class="number-button" id="decimal" data-number=".">.</button>
+            <div class="setting-control">
+                <label for="difficultySelect" class="setting-label">AI Difficulty</label>
+                <div class="select-wrapper">
+                    <select id="difficultySelect" disabled aria-label="Select AI Difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="impossible">Impossible</option>
+                    </select>
+                </div>
+            </div>
+        </section>
 
-            <button class="number-button" data-number="1">1</button>
-            <button class="number-button" data-number="2">2</button>
-            <button class="number-button" data-number="3">3</button>
-            <button id="equals-button" data-operator="=">=</button>
-            <button class="number-button" id="zero-button" data-number="0">0</button>
+        <!-- Scoreboard Container -->
+        <section class="scoreboard-container" aria-label="Scoreboard">
+            <div class="score-card" id="scoreXCard">
+                <span class="score-label" id="labelX">Player X Wins</span>
+                <span class="score-value" id="scoreXVal">0</span>
+            </div>
+            <div class="score-card" id="scoreDrawCard">
+                <span class="score-label">Draws</span>
+                <span class="score-value" id="scoreDrawVal">0</span>
+            </div>
+            <div class="score-card" id="scoreOCard">
+                <span class="score-label" id="labelO">Player O Wins</span>
+                <span class="score-value" id="scoreOVal">0</span>
+            </div>
+        </section>
+
+        <!-- Status / Active Turn Display -->
+        <div id="statusDisplay" class="status-display" aria-live="polite">
+            Player <span class="current-turn">X</span>'s Turn
         </div>
+
+        <!-- Relative-positioned Game Board Container -->
+        <main class="board-container">
+            <div class="game-board" id="gameBoard" role="grid" aria-label="Tic Tac Toe Board">
+                <!-- Absolute-positioned winning line element for dynamic strikethrough -->
+                <div class="winning-line" id="winningLine"></div>
+                
+                <!-- 9 interactive cells with data-index, proper ARIA roles, and labels -->
+                <button class="cell" data-index="0" role="gridcell" aria-label="Cell 1, empty"></button>
+                <button class="cell" data-index="1" role="gridcell" aria-label="Cell 2, empty"></button>
+                <button class="cell" data-index="2" role="gridcell" aria-label="Cell 3, empty"></button>
+                <button class="cell" data-index="3" role="gridcell" aria-label="Cell 4, empty"></button>
+                <button class="cell" data-index="4" role="gridcell" aria-label="Cell 5, empty"></button>
+                <button class="cell" data-index="5" role="gridcell" aria-label="Cell 6, empty"></button>
+                <button class="cell" data-index="6" role="gridcell" aria-label="Cell 7, empty"></button>
+                <button class="cell" data-index="7" role="gridcell" aria-label="Cell 8, empty"></button>
+                <button class="cell" data-index="8" role="gridcell" aria-label="Cell 9, empty"></button>
+            </div>
+        </main>
+
+        <!-- Controls Container -->
+        <section class="controls-container" aria-label="Game Controls">
+            <button id="playAgainBtn" class="btn btn-primary" aria-label="Play Again">Play Again</button>
+            <button id="resetScoresBtn" class="btn btn-secondary" aria-label="Reset Scores">Reset Scores</button>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="game-footer">
+            <p class="attribution">Crafted with ♥ for Tic Tac Toe Premium</p>
+        </footer>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
